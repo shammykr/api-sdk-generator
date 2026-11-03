@@ -1,0 +1,63 @@
+{
+  "name": "@shammykr/api-sdk-generator",
+  "version": "0.1.0",
+  "description": "Open-source CLI that parses OpenAPI specs and generates strongly typed API client SDKs",
+  "type": "module",
+  "bin": {
+    "api-sdk-generator": "dist/cli/index.js"
+  },
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "files": [
+    "dist",
+    "README.md",
+    "LICENSE"
+  ],
+  "engines": {
+    "node": ">=20"
+  },
+  "scripts": {
+    "build": "tsc -p tsconfig.json",
+    "lint": "eslint .",
+    "typecheck": "tsc -p tsconfig.json --noEmit",
+    "demo": "bash scripts/demo.sh",
+    "prepublishOnly": "npm run lint && npm run build"
+  },
+  "keywords": [
+    "openapi",
+    "swagger",
+    "sdk",
+    "codegen",
+    "typescript",
+    "python",
+    "cli",
+    "api-client"
+  ],
+  "author": "Shammy Kumar",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/shammykr/api-sdk-generator.git"
+  },
+  "homepage": "https://github.com/shammykr/api-sdk-generator#readme",
+  "bugs": {
+    "url": "https://github.com/shammykr/api-sdk-generator/issues"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "dependencies": {
+    "@apidevtools/swagger-parser": "^13.1.0",
+    "@inquirer/prompts": "^8.7.5",
+    "commander": "^15.0.0",
+    "picocolors": "^1.1.1",
+    "yaml": "^2.9.1"
+  },
+  "devDependencies": {
+    "@eslint/js": "^10.0.1",
+    "@types/node": "^26.6.6",
+    "eslint": "^10.14.0",
+    "typescript": "^6.0.3",
+    "typescript-eslint": "^8.72.1"
+  }
+}
