@@ -1,0 +1,38 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+jobs:
+  build:
+    name: Lint, build and demo (Node ${{ matrix.node }})
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        node: [20, 22]
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: ${{ matrix.node }}
+          cache: npm
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - run: npm ci
+      - run: npm run lint
+      - run: npm run build
+
+      - name: Install Python SDK runtime deps
+        run: pip install "httpx>=0.27" "pydantic>=2.6"
+
+      - name: Run demo (generate, determinism check, compile check)
+        run: npm run demo
+
+      - name: Committed examples match the current generator
+        run: git diff --exit-code -- examples/generated
