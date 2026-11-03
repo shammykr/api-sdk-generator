@@ -450,7 +450,7 @@ function primitiveTypes(schema: Schema): string[] {
 }
 
 function describe(schema: Schema): string | undefined {
-  const d = schema.description ?? schema.title;
+  const d = schema.description;
   return typeof d === "string" && d.trim() ? d.trim() : undefined;
 }
 
