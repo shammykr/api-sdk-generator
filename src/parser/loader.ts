@@ -37,7 +37,7 @@ export function parseSpecText(text: string, source: string, isJson: boolean): Ra
     if (doc.errors.length > 0) {
       throw new SpecError(
         `Invalid YAML in ${source}`,
-        doc.errors.map((e) => e.message.split("\n")[0]),
+        doc.errors.map((e) => e.message.split("\n")[0].replace(/:$/, "")),
       );
     }
     value = doc.toJS({ maxAliasCount: -1 });
