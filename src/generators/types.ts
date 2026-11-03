@@ -14,15 +14,19 @@ export interface Generator {
   generate(spec: ApiSpec): GeneratedFile[];
 }
 
-/** Normalise generated text: LF line endings, no trailing spaces, one final newline. */
-export function finalize(lines: string[]): string {
+/**
+ * Normalise generated text: LF line endings, no trailing spaces, at most
+ * `maxBlankLines` consecutive blank lines, exactly one final newline.
+ */
+export function finalize(lines: string[], maxBlankLines = 1): string {
+  const collapse = new RegExp(`\\n{${maxBlankLines + 2},}`, "g");
   return (
     lines
       .join("\n")
       .split("\n")
       .map((l) => l.replace(/[ \t]+$/, ""))
       .join("\n")
-      .replace(/\n{3,}/g, "\n\n")
+      .replace(collapse, "\n".repeat(maxBlankLines + 1))
       .trimEnd() + "\n"
   );
 }
